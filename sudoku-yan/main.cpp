@@ -9,15 +9,13 @@
 #include <string>
 #include "scene.hpp"
 
-using std::string,std::cout,std::endl;
-
 #define _TEST_ 0
 // #define __APPLE__ 1
 
 static void Help() // 运行说明
 {
-    cout<<endl<<"NAME"<<endl<<"\t Sudoku - a little game in command line"<<endl;
-    cout<<endl<<"OPTIONS"<<endl<<"\t -l <path> "<<endl<<"\t   specify path of progress file saved before to load and contine your game, it is optional."<<endl;
+    std::cout<<std::endl<<"NAME"<<std::endl<<"\t Sudoku - a little game in command line"<<std::endl;
+    std::cout<<std::endl<<"OPTIONS"<<std::endl<<"\t -l <path> "<<std::endl<<"\t   specify path of progress file saved before to load and contine your game, it is optional."<<std::endl;
     return;
 }
 // argc是命令行参数个数,指定argv的大小，argv是命令行参数字符串数组，参数以字符串形式保存
@@ -32,7 +30,7 @@ int main(int argc, const char * argv[]) {
     if(argc==1) // 默认为1，除了文件名本身没有其他参数
     {
         Scene.Generate();
-    }else if(argc==3&&string(argv[1])==string("-l")){ // 带有参数，从之前的保存的文件读取游戏进度
+    }else if(argc==3&&std::string(argv[1])==std::string("-l")){ // 带有参数，从之前的保存的文件读取游戏进度
         Scene.Load(argv[2]); // load saved progress file，argv[2]是备份文件的路径
     }else{
         Help(); // 显示帮助
