@@ -6,10 +6,6 @@
 	objectVersion = 55;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		2C66AAE629B6CD5F00456C27 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C66AAE529B6CD5F00456C27 /* main.cpp */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		2C66AAE029B6CD5F00456C27 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -24,7 +20,7 @@
 
 /* Begin PBXFileReference section */
 		2C66AAE229B6CD5F00456C27 /* sudoku-yan */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "sudoku-yan"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2C66AAE529B6CD5F00456C27 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		2C8516BF29CEDE650086EF31 /* sudoku-yan */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "sudoku-yan"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +37,7 @@
 		2C66AAD929B6CD5F00456C27 = {
 			isa = PBXGroup;
 			children = (
-				2C66AAE429B6CD5F00456C27 /* sudoku-yan */,
+				2C8516BF29CEDE650086EF31 /* sudoku-yan */,
 				2C66AAE329B6CD5F00456C27 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,14 +48,6 @@
 				2C66AAE229B6CD5F00456C27 /* sudoku-yan */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		2C66AAE429B6CD5F00456C27 /* sudoku-yan */ = {
-			isa = PBXGroup;
-			children = (
-				2C66AAE529B6CD5F00456C27 /* main.cpp */,
-			);
-			path = "sudoku-yan";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +107,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C66AAE629B6CD5F00456C27 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
