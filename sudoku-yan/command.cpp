@@ -19,11 +19,10 @@ Command::~Command(){}
 
 bool Command::execute(int inputvalue)
 {
-    if(!owner_) // owner_不存在
+    if(!owner_) // owner_不存在，前提是这个ower_存在
         return false;
     point_ = owner_->GetCurPoint(); // 获取当前的坐标
     return owner_->SetCurValue(inputvalue, pre_value_);
-    
 }
 void Command::undo()
 {

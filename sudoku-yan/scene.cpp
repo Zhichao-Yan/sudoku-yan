@@ -160,14 +160,14 @@ void CScene::Play()
     while(1)
     {
         key = getch(); //获取键盘输入
-        if (key >= '0' && key <= '9')
+        if (key >= '0' && key <= '9') // 0为删除，1-9为值
         {
             Command com(this); // 利用当前场景指针创建一个命令对象
-            if(!com.execute(key - '0' )) // 输入数字字符进行修改
+            if(!com.execute(key - '0' )) // 输入数字字符，对当前坐标的值进行修改
             {
                 std::cout << "this number can't be modified." << std::endl;
             }else{
-                commands_.push_back(com);
+                commands_.push_back(com); //将该命令放入command_命令向量，便于回撤
                 Show();
                 continue;
             }
