@@ -8,6 +8,7 @@
 #ifndef common_h
 #define common_h
 
+static const unsigned int kNotSelected = 0; // 代表暂时没有填入，其他1-9代表以及存在的数
 
 enum class Difficulty : int
 {
