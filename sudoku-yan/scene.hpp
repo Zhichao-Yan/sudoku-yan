@@ -34,23 +34,25 @@ public:
     void Load(std::string filename);
     void Play();
     bool IsCompleted();
-    void EraseGrids();
     void SetInputMode();
     
     Point GetCurPoint();
     bool SetCurValue(const int curvalue, int& lastvalue);
     bool SetPointValue(const Point& p, const int value);
+
 private:
     void Init(); // 将每个格子（共81个）放入相对应的block中。每一个格子对应多个block即行block/列block/方块block
+    void EraseGrids();
     void SetValue(const Point &p, const int value);
     void SetValue(const int value);
     void PrintUnderLine(int line = -1) const;
     void Save(const std::string filepath);
+
 private:
     int index_ = 9;
-    KeyBoard *boad_;
-    PointValue map_[81];
-    Point cur_point_;
+    KeyBoard *boad_; // 代表键盘的输入模式 w-s-a-d / h-j-k-ls 设计成指针，根据对象的值进行操作
+    PointValue map_[81]; // 实际保存数独方格的值，共81个方格
+    Point cur_point_; // 当前落子点
     CBlock column_blocks_[9]; // 每一个CScene对象有9个列模块，即有9个列
     CBlock row_blocks_[9]; // 每一个CScene对象有9个行模块，即有9个行
     CBlock mini_blocks_[3][3]; // 每一个CScene对象有9个的子模块模块，子模块为3*3的大小

@@ -39,14 +39,14 @@ void CBlock::Print() const
     for (int i = 0; i < count_; ++i)
     {
         PointValue number = *(numbers_[i]);
-        if (number.value == 0)
+        if (number.value == 0) // 没有数字
             std::cout << ' ' << " \u2503 ";
-        else
+        else // 有数字
         {
-            if (number.state == State::ERASED) // 此数为被填入的数需要着色
+            if (number.state == State::ERASED) // 此数字为被填入的数需要着色
                 std::cout << Color::Modifier(Color::FG_GREEN) << number.value << Color::Modifier(Color::RESET) << " \u2503 ";
             else
-                std::cout << number.value << " \u2503 "; // 此数为初始数字直接输出
+                std::cout << number.value << " \u2503 "; // 此数字为一开始生成的！直接输出
         }
     }
     std::cout << std::endl;

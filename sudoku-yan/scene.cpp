@@ -8,7 +8,7 @@
 #include "scene.hpp"
 CScene::CScene(int index) // 构造函数
     : index_(index)
-    , cur_point_({0,0}) //设置当前坐标
+    , cur_point_({0,0}) //初始化设置当前坐标为（0，0）
 {
     Init();
 }
@@ -16,9 +16,12 @@ CScene::~CScene() // 析构函数
 {
     if(boad_) delete boad_;
 }
+// 初始化小模块，为判断是否完成数独做准备
+// 一个完成的数独需要每一行，每一列，每一个3*3小模块都不包含重复数字
 void CScene::Init()
 {
-    memset(map_, kNotSelected, sizeof(map_));
+    memset(map_, 0, sizeof(map_)); // 为CScene整个map_赋值0
+    // 初始化9个列模块
     for(int col = 0; col < index_; col++)
     {
         CBlock block;
@@ -28,6 +31,7 @@ void CScene::Init()
         }
         column_blocks_[col] = block;
     }
+    // 初始化9个行模块
     for(int row = 0; row < index_; row++)
     {
         CBlock block;
@@ -89,10 +93,12 @@ void CScene::Generate()
             SetValue(p, map[c]); // 设置某个位置p的字符对应的整数值
         }
     }
-    assert(IsCompleted());
-    EraseGrids();
+    assert(IsCompleted()); // 到现在肯定是被完成的，刚刚映射完成
+    EraseGrids(); // 需要根据难度等级抹去一些数字
     return;
 }
+
+// 需要根据难度等级抹去一些数字
 void CScene::EraseGrids()
 {
     int n = InputDiffculty(); // n代表随机删除的格子
@@ -109,12 +115,13 @@ void CScene::EraseGrids()
         v.erase(v.begin()+loc);
     }
 }
+// 输入键盘模式， 通过指针转向不同的调用对象
 void CScene::SetInputMode()
 {
     InputMode mode=InputKeyboardMode();
     switch (mode) {
         case InputMode::NORMAL:
-            boad_= new Normal;
+            boad_= new Normal; 
             break;
             
         case InputMode::VIM:
@@ -122,17 +129,7 @@ void CScene::SetInputMode()
             break;
     }
 }
-void CScene::Show() const
-{
-    cls(); // 先清屏
-    PrintUnderLine(); // 打印最上方的顶线
-    for(int row = 0; row < index_; ++row)
-    {
-        CBlock block = row_blocks_[row];
-        block.Print();
-        PrintUnderLine(row);
-    }
-}
+// 打印一条底线
 void CScene::PrintUnderLine(int line) const
 {
     for(int col = 0; col < 9; col++)
@@ -141,6 +138,18 @@ void CScene::PrintUnderLine(int line) const
     }
     std::cout << "\u254B" << std::endl;
 }
+// 在终端打印方格图像
+void CScene::Show() const
+{
+    cls(); // 先清屏
+    PrintUnderLine(); // 打印最上方的顶线
+    for(int row = 0; row < index_; ++row) // 9个行模块
+    {
+        CBlock block = row_blocks_[row];
+        block.Print(); // 打印出这一行模块的数字，共9个
+        PrintUnderLine(row);
+    }
+}
 void CScene::Play()
 {
     SetInputMode(); // 选择输入键盘模式
@@ -148,7 +157,7 @@ void CScene::Play()
     char key = '\0';
     while(1)
     {
-        key = getch();
+        key = getch(); //获取键盘输入
         if (key >= '0' && key <= '9')
         {
             Command com(this); // 利用当前场景指针创建一个命令对象
