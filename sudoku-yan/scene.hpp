@@ -45,8 +45,6 @@ private:
     bool IsCompleted();
     void Save(const std::string filepath); // 保存游戏进度
     bool Available(Point p);
-    static const unsigned int kNotSelected = 0; // 代表暂时没有填入，其他1-9代表以及存在的数
-
 private:
     int index_ = 9;
     KeyBoard *boad_; // 代表键盘的输入模式 w-s-a-d / h-j-k-ls 设计成指针，根据对象的值进行操作
