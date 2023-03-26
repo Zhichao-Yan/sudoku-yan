@@ -23,7 +23,7 @@ public:
     void Print() const;
     void PushBack(PointValue *point); // 将一个PointValue指针放入block
 private:
-    int count_; // 包含的值个数
+    int count_; // 当前已经包含的PointValue指针个数
     PointValue* numbers_[kMaxCount]; // 该模块实际保存的map_指针
 };
 #endif /* block_hpp */
