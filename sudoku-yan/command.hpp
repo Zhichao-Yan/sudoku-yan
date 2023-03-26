@@ -23,13 +23,13 @@ public:
     ~Command();
     Point GetPoint() { return point_;}
     int GetPreValue() { return pre_value_; }
-    int GetCurValue() { return value_; }
+    int GetCurValue() { return cur_value_; }
     bool execute(int inputvalue);
     void undo();
 private:
     CScene* owner_; // 指针
     Point point_; // 执行命令的坐标
     int pre_value_; // 命令执行前该点的值
-    int value_;  // 命令执行后该点的值
+    int cur_value_;  // 命令执行后该点的值
 };
 #endif /* command_hpp */
