@@ -134,7 +134,8 @@ void CScene::PrintUnderLine(int line) const
 {
     for(int col = 0; col < 9; col++)
     {
-        std::cout << "\u254B" << "\u2501" << ((cur_point_.x == line && cur_point_.y == col)?"^":"\u2501") << "\u2501"; // 会在当前位置的下标线上输出'^'字符
+        // 会在当前位置的下标线上输出'^'字符
+        std::cout << "\u254B" << "\u2501" << ((cur_point_.x == line && cur_point_.y == col)?"^":"\u2501") << "\u2501"; 
     }
     std::cout << "\u254B" << std::endl;
 }
@@ -150,6 +151,7 @@ void CScene::Show() const
         PrintUnderLine(row);
     }
 }
+
 void CScene::Play()
 {
     SetInputMode(); // 选择输入键盘模式
@@ -184,7 +186,7 @@ void CScene::Play()
                     std::cout << " Please input the path of the progress file : " << std::endl;
                     std::string path;
                     std::cin >> path;
-                    Save(path);
+                    Save(path); // 保存游戏进度，path为文件的路径
                 }
                 exit(0);// 退出游戏
             }else{
@@ -201,19 +203,19 @@ void CScene::Play()
                 commands_.pop_back();
                 Show();
             }
-        }else if(key == boad_->UP)
+        }else if(key == boad_->UP) // 上
         {
             cur_point_.x = (cur_point_.x > 0 ? cur_point_.x-1 : 0);
             Show();
-        }else if(key == boad_->DOWN)
+        }else if(key == boad_->DOWN) // 下
         {
             cur_point_.x = (cur_point_.x < 8 ? cur_point_.x+1 : 8);
             Show();
-        }else if(key == boad_->RIGHT)
+        }else if(key == boad_->RIGHT) // 右
         {
             cur_point_.y = (cur_point_.y < 8 ? cur_point_.y+1 : 8);
             Show();
-        }else if(key == boad_->LEFT)
+        }else if(key == boad_->LEFT) // 左
         {
             cur_point_.y = (cur_point_.y > 0 ? cur_point_.y-1 : 0);
             Show();
@@ -222,15 +224,15 @@ void CScene::Play()
             if(IsCompleted())
             {
                 std::cout << "Congradulations! Game finished!!" <<std::endl;
-                getchar();
+                getchar(); // 要等待一个输入，即按任意键结束退出游戏。不然直接退出了看不到恭喜完成
                 exit(0);
             }else{
                 std::cout << "Sorry! Game not completed!" << std::endl;
             }
         }
     }
-    
 }
+
 void CScene::SetValue(const Point &p, const int value)
 {
     map_[ p.x*9 + p.y ].value = value; // 从二维映射到一维空间
@@ -313,6 +315,7 @@ void CScene::Load(std::string filename)
     }
 }
 
+// 检测数独游戏是否完成
 bool CScene::IsCompleted()
 {
     // 任何一个空格为0，那么它意味着没有被填满

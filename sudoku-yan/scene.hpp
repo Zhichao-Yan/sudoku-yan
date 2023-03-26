@@ -30,12 +30,8 @@ public:
     CScene(int index = 9);
     virtual ~CScene();
     void Generate();
-    void Show() const;
     void Load(std::string filename);
     void Play();
-    bool IsCompleted();
-    void SetInputMode();
-    
     Point GetCurPoint();
     bool SetCurValue(const int curvalue, int& lastvalue);
     bool SetPointValue(const Point& p, const int value);
@@ -43,10 +39,13 @@ public:
 private:
     void Init(); // 将每个格子（共81个）放入相对应的block中。每一个格子对应多个block即行block/列block/方块block
     void EraseGrids();
+    void PrintUnderLine(int line = -1) const;
+    void Show() const;
+    void SetInputMode();
+    bool IsCompleted();
+    void Save(const std::string filepath); // 保存游戏进度
     void SetValue(const Point &p, const int value);
     void SetValue(const int value);
-    void PrintUnderLine(int line = -1) const;
-    void Save(const std::string filepath);
 
 private:
     int index_ = 9;
