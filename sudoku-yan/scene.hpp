@@ -32,7 +32,7 @@ public:
     void Generate();
     void Load(std::string filename);
     void Play();
-    Point GetCurPoint(); // 获取当前的点
+    Point& GetCurPoint(); // 获取当前的点
     int  GetValue(const Point &p); // 获取p点的值
     void SetValue(const Point &p, const int value);
     void SetValue(const int value);

@@ -18,7 +18,6 @@ class CScene; // 申明一个不完全类型
 class Command{
 public:
     Command();
-    Command(const Command &);
     Command(Point p,int value);
     ~Command();
     void Execute(CScene *S,int value);

@@ -9,9 +9,6 @@
 
 Command::Command(){}
 
-Command::Command(const Command &rhs)
-: point_(rhs.point_), pre_value_(rhs.pre_value_){}
-
 Command::Command(Point p,int value)
 : point_(p),pre_value_(value){}
 
@@ -25,8 +22,9 @@ void Command::Execute(CScene *S,int value)
 }
 void Command::Undo(CScene *S)
 {
+    S->GetCurPoint() = point_;
     S->SetValue(point_,pre_value_); // 设置回之前的值
-    return;
+    return; 
 }
 Point Command::GetPoint()
 {
