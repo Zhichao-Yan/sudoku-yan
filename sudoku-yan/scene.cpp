@@ -232,11 +232,12 @@ void CScene::Play()
         }
     }
 }
-
+// 设置某个点的值，此时不管它是否能过被修改，一半用于Sceen初始化的时候
 void CScene::SetValue(const Point &p, const int value)
 {
-    map_[ p.x*9 + p.y ].value = value; // 从二维映射到一维空间
+    map_[ p.x * 9 + p.y ].value = value; // 从二维映射到一维空间
 }
+// 给当前^指向的点赋值
 void CScene::SetValue(const int value)
 {
     SetValue(cur_point_, value); // 设置当前点的值
@@ -246,7 +247,7 @@ void CScene::SetValue(const int value)
 bool CScene::SetCurValue(const int curvalue, int &lastvalue)
 {
     auto v = map_[cur_point_.x * 9 + cur_point_.y];
-    if(v.state == State::ERASED)
+    if(v.state == State::ERASED) //可以修改的值
     {
         lastvalue = v.value;
         SetValue(curvalue);
