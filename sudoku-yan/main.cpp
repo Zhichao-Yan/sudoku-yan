@@ -24,7 +24,7 @@ int main(int argc, const char * argv[]) {
 
 #if _TEST_ // 根据宏定义_TEST_判断是否进行测试，默认为0，不测试
 
-    
+
 #else
     CScene Scene;
     if(argc==1) // 默认为1，除了文件名本身没有其他参数
