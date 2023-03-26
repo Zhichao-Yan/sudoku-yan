@@ -32,10 +32,10 @@ public:
     void Generate();
     void Load(std::string filename);
     void Play();
-    Point GetCurPoint();
-    bool SetCurValue(const int curvalue, int& lastvalue);
-    bool SetPointValue(const Point& p, const int value);
-
+    Point GetCurPoint(); // 获取当前的点
+    int  GetValue(const Point &p); // 获取p点的值
+    void SetValue(const Point &p, const int value);
+    void SetValue(const int value);
 private:
     void Init(); // 将每个格子（共81个）放入相对应的block中。每一个格子对应多个block即行block/列block/方块block
     void EraseGrids();
@@ -44,8 +44,8 @@ private:
     void SetInputMode();
     bool IsCompleted();
     void Save(const std::string filepath); // 保存游戏进度
-    void SetValue(const Point &p, const int value);
-    void SetValue(const int value);
+    bool Available(Point p);
+    static const unsigned int kNotSelected = 0; // 代表暂时没有填入，其他1-9代表以及存在的数
 
 private:
     int index_ = 9;

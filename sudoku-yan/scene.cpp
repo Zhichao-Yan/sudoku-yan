@@ -151,7 +151,13 @@ void CScene::Show() const
         PrintUnderLine(row);
     }
 }
-
+bool CScene::Available(Point p)
+{
+    PointValue v = map_[ p.x * 9 + p.y];
+    if(v.state == State::ERASED)
+        return true;
+    return false;
+}
 void CScene::Play()
 {
     SetInputMode(); // 选择输入键盘模式
@@ -162,11 +168,12 @@ void CScene::Play()
         key = getch(); //获取键盘输入
         if (key >= '0' && key <= '9') // 0为删除，1-9为值
         {
-            Command com(this); // 利用当前场景指针创建一个命令对象
-            if(!com.execute(key - '0' )) // 输入数字字符，对当前坐标的值进行修改
+            if(!Available(cur_point_)) // 输入数字字符，对当前坐标的值进行修改
             {
                 std::cout << "this number can't be modified." << std::endl;
             }else{
+                Command com;
+                com.Execute(this,key - '0');
                 commands_.push_back(com); //将该命令放入command_命令向量，便于回撤
                 Show();
                 continue;
@@ -177,11 +184,11 @@ void CScene::Play()
             std::cout << "want to quit now?[Y/N] : " ;
             std::string str;
             std::cin >> str;
-            if(str[0] == 'y' || str[1] == 'Y')
+            if(str[0] == 'y' || str[0] == 'Y')
             {
                 std::cout << "want to save the game?[Y/N] : " ;
                 std::cin >> str;
-                if(str[0] == 'y' || str[1] == 'Y')
+                if(str[0] == 'y' || str[0] == 'Y')
                 {
                     std::cout << " Please input the path of the progress file : " << std::endl;
                     std::string path;
@@ -199,7 +206,7 @@ void CScene::Play()
                 std::cout << "no more actions to undo!!" << std::endl;
             }else{
                 Command& com = commands_.back();
-                com.undo();
+                com.Undo(this);
                 commands_.pop_back();
                 Show();
             }
@@ -235,6 +242,7 @@ void CScene::Play()
 // 设置某个点的值，此时不管它是否能过被修改，一半用于Sceen初始化的时候
 void CScene::SetValue(const Point &p, const int value)
 {
+    cur_point_ = p;
     map_[ p.x * 9 + p.y ].value = value; // 从二维映射到一维空间
 }
 // 给当前^指向的点赋值
@@ -242,31 +250,10 @@ void CScene::SetValue(const int value)
 {
     SetValue(cur_point_, value); // 设置当前点的值
 }
-
-// 设置新值，保留旧值
-bool CScene::SetCurValue(const int curvalue, int &lastvalue)
+int CScene::GetValue(const Point &p)
 {
-    auto v = map_[cur_point_.x * 9 + cur_point_.y];
-    if(v.state == State::ERASED) //可以修改的值
-    {
-        lastvalue = v.value;
-        SetValue(curvalue);
-        return true;
-    }else
-        return false;
-}
-// 设置p点的值
-bool CScene::SetPointValue(const Point& p, const int value)
-{
-    auto v = map_[p.x * 9 + p.y];
-    if (v.state == State::ERASED) // 原始为空格才可修改
-    {
-        cur_point_ = p;
-        SetValue(value);
-        return true;
-    }
-    else
-        return false;
+    int val = map_[p.x * 9 + p.y].value;
+    return val;
 }
 Point CScene::GetCurPoint()
 {
@@ -287,7 +274,7 @@ void CScene::Save(const std::string filepath)
         for(auto c:commands_)
         {
             Point p = c.GetPoint();
-            out << p.x << ' ' << p.y << ' ' << c.GetCurValue() << ' ' << c.GetPreValue() << std::endl;
+            out << p.x << ' ' << p.y << ' ' << c.PreValue() << std::endl;
         }
         out.close();
     }
@@ -309,9 +296,9 @@ void CScene::Load(std::string filename)
         while(in)
         {
             Point p;
-            int cur_value,pre_value;
-            in >> p.x >> p.y >> cur_value >> pre_value;
-            commands_.emplace_back(this,p,pre_value,cur_value);
+            int pre_value;
+            in >> p.x >> p.y >> pre_value;
+            commands_.emplace_back(p,pre_value);
         }
     }
 }

@@ -7,28 +7,32 @@
 
 #include "command.hpp"
 
-Command::Command(CScene *owner):owner_(owner){}
-
-Command::Command(CScene *owner, const Point &point, int pre_value, int cur_value)
-:owner_(owner),point_(point),pre_value_(pre_value),cur_value_(cur_value){}
+Command::Command(){}
 
 Command::Command(const Command &rhs)
-: owner_(rhs.owner_), point_(rhs.point_), pre_value_(rhs.pre_value_), cur_value_(rhs.cur_value_){}
+: point_(rhs.point_), pre_value_(rhs.pre_value_){}
+
+Command::Command(Point p,int value)
+: point_(p),pre_value_(value){}
 
 Command::~Command(){}
 
-bool Command::execute(int inputvalue)
+void Command::Execute(CScene *S,int value)
 {
-    if(!owner_) // owner_不存在，前提是这个ower_存在
-        return false;
-    point_ = owner_->GetCurPoint(); // 获取当前的坐标
-    return owner_->SetCurValue(inputvalue, pre_value_);
+    point_ = S->GetCurPoint();
+    pre_value_ = S->GetValue(point_);
+    S->SetValue(value); // 设置当前值为value
 }
-void Command::undo()
+void Command::Undo(CScene *S)
 {
-    if(owner_)
-    {
-        owner_->SetPointValue(point_, pre_value_); // 给上一个命令操作的点返回之前的值
-    }
+    S->SetValue(point_,pre_value_); // 设置回之前的值
     return;
+}
+Point Command::GetPoint()
+{
+    return point_;
+}
+int Command::PreValue()
+{
+    return pre_value_;
 }
