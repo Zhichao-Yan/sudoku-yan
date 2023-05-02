@@ -60,6 +60,7 @@ void CScene::Init()
     }
     return;
 }
+
 void CScene::Generate()
 {
     // 固定的模版
@@ -129,6 +130,7 @@ void CScene::SetInputMode()
             break;
     }
 }
+
 // 打印一条底线
 void CScene::PrintUnderLine(int line) const
 {
@@ -279,6 +281,7 @@ void CScene::Save(const std::string filepath)
     }
     
 }
+
 void CScene::Load(std::string filename)
 {
     std::ifstream in;
